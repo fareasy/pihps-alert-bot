@@ -1,0 +1,13 @@
+# Python cache
+__pycache__/
+*.pyc
+
+# Environment file (NEVER commit secrets)
+.env
+
+# Database file (local data)
+pihps.db
+
+# Virtual environment (if you use one)
+venv/
+.env/
