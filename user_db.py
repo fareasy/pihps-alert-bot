@@ -35,18 +35,20 @@ def init_sent_alerts_table():
     conn.commit()
     conn.close()
 
-def save_user_preferences(chat_id, province, threshold=5):
+def save_user_preferences(chat_id, province, threshold=None):
+    if threshold is None:
+        threshold = 5.0
 
-    conn = sqlite3.connect(DB_NAME)
-    cursor = conn.cursor()
+    conn = sqlite3.connect("pihps.db")
+    cur = conn.cursor()
 
-    cursor.execute("""
-    INSERT OR REPLACE INTO users (
-        chat_id,
-        province,
-        threshold
-    )
-    VALUES (?, ?, ?)
+    cur.execute("""
+        INSERT INTO users (chat_id, province, threshold)
+        VALUES (?, ?, ?)
+        ON CONFLICT(chat_id)
+        DO UPDATE SET
+            province = excluded.province,
+            threshold = excluded.threshold
     """, (chat_id, province, threshold))
 
     conn.commit()
@@ -54,18 +56,16 @@ def save_user_preferences(chat_id, province, threshold=5):
 
 
 def get_user_preferences(chat_id):
+    conn = sqlite3.connect("pihps.db")
+    cur = conn.cursor()
 
-    conn = sqlite3.connect(DB_NAME)
-    cursor = conn.cursor()
-
-    cursor.execute("""
-    SELECT province, threshold
-    FROM user_preferences
-    WHERE chat_id = ?
+    cur.execute("""
+        SELECT province, threshold
+        FROM users
+        WHERE chat_id = ?
     """, (chat_id,))
 
-    row = cursor.fetchone()
-
+    row = cur.fetchone()
     conn.close()
 
     return row

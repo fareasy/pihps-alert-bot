@@ -61,6 +61,8 @@ async def setprovince(update: Update, context: ContextTypes.DEFAULT_TYPE):
         f"✅ Province set to: {province}"
     )
 
+    print("SAVE:", chat_id, province)
+
 async def setthreshold(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     chat_id = str(update.effective_chat.id)
@@ -123,6 +125,7 @@ Threshold: {threshold}%
 """
 
     await update.message.reply_text(text)
+    print("READ:", chat_id, prefs)
 
 async def check(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
