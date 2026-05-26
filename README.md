@@ -1,5 +1,7 @@
 # PIHPS Commodity Alert Bot
 
+<img width="1427" height="763" alt="PIHPS_bot" src="https://github.com/user-attachments/assets/134711b2-01d8-4d6e-89f7-dec7e565919f" />
+
 A Telegram bot that monitors Indonesian food commodity prices (PIHPS) and sends automated alerts when significant price changes occur.
 
 
